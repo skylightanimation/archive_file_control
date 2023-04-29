@@ -1,0 +1,165 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "description": "Generate File Archive with restful api",
+      "version": "1.0.0",
+      "title": "Archived File Control",
+      "license": {
+        "name": "MIT",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "servers": [
+      {
+        "url": "/"
+      }
+    ],
+    "tags": [
+      {
+        "name": "Projection",
+        "description": "Manipulate directory and file : create dirctory with 'Movie Name' and create sub directory with 'Generation of Name as composed by Actress / Title / Track Number / Type', rename file inside sub directory, archived the folder"
+      }
+    ],
+
+    "paths": {
+      "/create_folder": {
+        "post": {
+          "tags": [
+            "Projection"
+          ],
+          "summary": "Create a folder as 'Movie Name' that results  selected by 'Movie ID'. ",
+          "requestBody": {
+            "description": "Get data form table 'Movie' & 'Movie Song' by the Post Object 'Movie ID', then create main folder as 'Movie Name' and Sub Folders as 'Movie Song Name'",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/id"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/id"
+              }
+            },
+            "400": {
+              "description": "Failed. Bad post data."
+            }
+          }
+        }
+      },
+      "/create_archive": {
+        "post": {
+          "tags": [
+            "Projection"
+          ],
+          "summary": "Rename file inside sub directory that composed by 'Actres - Title'. ",
+          "requestBody": {
+            "description": "Get data form table 'Movie' & 'Movie Song' by the Post Object 'Movie ID', then create main folder as 'Movie Name' and Sub Folders as 'Movie Song Name'",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/id"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/id"
+              }
+            },
+            "400": {
+              "description": "Failed. Bad post data."
+            }
+          }
+        }
+      },
+      "/rename_song": {
+        "post": {
+          "tags": [
+            "Projection"
+          ],
+          "summary": "Archived the folder ",
+          "requestBody": {
+            "description": "Get data form table 'Movie' & 'Movie Song' by the Post Object 'Movie ID', then create main folder as 'Movie Name' and Sub Folders as 'Movie Song Name'",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/id"
+                }
+              }
+            }
+          },
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "201": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/components/schemas/id"
+              }
+            },
+            "400": {
+              "description": "Failed. Bad post data."
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "id": {
+          "properties": {
+            "id": {
+              "type": "string"
+            }
+          }
+        },
+        "successResponse": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "object"
+            },
+            "status": {
+              "type": "number"
+            },
+            "message":{
+              "type":"string"
+            }
+          }
+        },
+        "failedResponse": {
+          "type": "object",
+          "properties": {
+            "data": {
+              "type": "object"
+            },
+            "status": {
+              "type": "number"
+            },
+            "message":{
+              "type":"string"
+            }
+          }
+        }
+      }
+    }
+  }
+  

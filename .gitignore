@@ -1,0 +1,7 @@
+**/env_fg
+**/.vscode
+
+**/data
+**/data/master
+**/data/process
+**/data/results
