@@ -20,17 +20,15 @@ ma = Marshmallow(app)
 
 
 from controllers import projectionController
+from controllers import animeStatusController
 
 
-@app.route('/')
-def index():
-	print('Hello w')
-	return 'Hello WOrld'
-	
 @app.route('/root', methods=['GET'])
 def root():
 	return 'try!'
 
 if __name__ == '__main__':
-	port = int(os.environ.get('PORT', 5000))
-	app.run(debug=True, port=port)
+    app.run(host="localhost", port=5011, debug=True)
+    
+	# port = int(os.environ.get('PORT', 5011))
+	# app.run(debug=True, port=port)

@@ -25,6 +25,7 @@ class Responses():
             error = __access._errorResponse
             return error
 
+    _content_type = configuration.Response._contentType
 
 # class header:
 #     __access = configuration.request_header

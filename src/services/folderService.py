@@ -79,6 +79,9 @@ class FolderService():
             
             checkProcess = self.isExist(path)
             
+            # print(path)
+            # print(checkProcess)
+            
             if checkProcess == True:
                 command = 'rmdir /s /q "'+path+'"'
                 os.system(command)

@@ -1,3 +1,4 @@
+import jsons
 import sys
 sys.path.append('../')
 from services.animeService import AnimeService
@@ -6,6 +7,7 @@ from services.folderService import FolderService as DS
 from services.folderNameService import FolderNameService as DNS
 from services.archiveService import ArchiveService
 from services.fileService import FileService
+from services.animeStatusService import AnimeStatusService as AnimeStatusHandler
 
 from systems.response import Responses
 from systems.master import Master
@@ -27,14 +29,34 @@ class ProjectionService():
   
 		return action
 
+	# remove foler basic
+	# def remove_anime_folder(id):
+	# 	getData = AnimeService.getById(id)
+	# 	name = getData['anime_title_romaji']  
+	# 	# print(getData['anime_title_romaji'])
+	# 	path = DS().useDirecotry(name)
+	# 	action = DS().removeDirecotry(name)
+	# 	return action
 
 	def remove_anime_folder(id):
-		getData = AnimeService.getById(id)
-		name = getData['anime_title_romaji']  
-		# print(getData['anime_title_romaji'])
-		path = DS().useDirecotry(name)
-		action = DS().removeDirecotry(name)
-		return action
+		try:
+			getData = AnimeService.getById(id)
+			name = getData['anime_title_romaji']  
+			# print(getData['anime_title_romaji'])
+			path = DS().useDirecotry(name)
+			action = DS().removeDirecotry(path)
+			AnimeStatusHandler.resetStatus(id)   
+			responseResult = Responses.response('success')
+   
+			return jsons.dumps(responseResult), Responses._content_type
+			# return responseResult
+		except Exception as e:
+			print(e)
+			responseResult = Responses.response('failed')
+			responseResult['message'] = str(e)
+			return jsons.dumps(responseResult), Responses._content_type
+			# return responseResult  
+     
 
 
 	def create_anime_ost_folder(id):
@@ -86,15 +108,17 @@ class ProjectionService():
 			# 	songFolder = code+'_'+artist_romaji+' - '+romaji_song 
 			# 	pathDestination = path+'\\'+songFolder
     
-				
-       
+			AnimeStatusHandler().statusControl(id, 'is_folder')
+
 			responseResult = Responses.response('success')
-			return responseResult
+			return jsons.dumps(responseResult), Responses._content_type
+			# return responseResult
 		except Exception as e:
 			print(e)
 			responseResult = Responses.response('failed')
 			responseResult['message'] = str(e)
-			return responseResult  
+			return jsons.dumps(responseResult), Responses._content_type
+			# return responseResult  
 
 
 	def create_anime_ost_folder_archive(id):
@@ -109,6 +133,7 @@ class ProjectionService():
 			directores = DS().readDirectory(path)
 			archiveAction = ArchiveService().doArchive(path, directores)
 			# print("archiveAction : "+archiveAction)
+			AnimeStatusHandler().statusControl(id, 'is_archive')   
 			responseResult = Responses.response('success')
 			return responseResult
 			# archive(pathResult, pathDirection)
@@ -132,6 +157,7 @@ class ProjectionService():
 			directores = DS().readDirectory(path)
    
 			FileService().rename_batch(directores, path)
+			AnimeStatusHandler().statusControl(id, 'is_rename')
 			responseResult = Responses.response('success')
 			return responseResult
    

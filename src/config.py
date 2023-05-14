@@ -30,6 +30,7 @@ class API():
 	_login_header = ""
  
 class Response():
+	_contentType = {"Content-Type":"application/json"}
 	_successResponse = dict(status="200",message="success",data=[])
 	_failedResponse = dict(status="401",message="failed",)
 	_notfoundResponse = dict(status="404",message="not found")

@@ -6,6 +6,10 @@ import sys
 sys.path.append('../')
 from services.projectionService import ProjectionService as ProjectionHandler
 
+@app.route('/test', methods=['GET'])
+# @REQUEST_API.route('/create_folder', methods=['POST'])
+def test():
+    return 'Say Hi!!! the application running normaly'
 
 
 # @app.route('/testss')
@@ -26,7 +30,10 @@ from services.projectionService import ProjectionService as ProjectionHandler
 @app.route('/create_folder', methods=['POST'])
 # @REQUEST_API.route('/create_folder', methods=['POST'])
 def create_folder():
+    print("acces here")
     data = request.get_json()
+    print(data)
+    print(data['id'])
     ID = int(data['id'])
     dataAnime = ProjectionHandler.create_anime_ost_folder(ID)
     return dataAnime
@@ -47,6 +54,16 @@ def rename_song():
     data = request.get_json()
     ID = int(data['id'])
     dataAnime = ProjectionHandler.rename_anime_ost_file(ID)
+    return dataAnime
+
+
+@app.route('/remove_folder', methods=['POST'])
+# @REQUEST_API.route('/rename_song', methods=['POST'])
+def remove_folder():
+    data = request.get_json()
+    ID = int(data['id'])
+    print(ID)
+    dataAnime = ProjectionHandler.remove_anime_folder(ID)
     return dataAnime
 
 
